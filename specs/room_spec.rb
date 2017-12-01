@@ -26,5 +26,30 @@ class TestRoom < MiniTest::Test
     assert_equal([], @room.guest_list)
   end
 
+  def test_guest_can_enter_room
+    # not using an actual guest at this point (no need to complicate things!)
+    @room.enter("guest")
+    assert_equal(["guest"], @room.guest_list )
+  end
+
+  def test_guest_can_leave_room
+    @room.enter("guest")
+    @room.enter("another_guest")
+    @room.leave("guest")
+    assert_equal(["another_guest"], @room.guest_list )
+  end
+
+  def test_room_can_upload_songs
+    @room.upload("Macarena")
+    assert_equal(["Macarena"], @room.song_list)
+  end
+
+  def test_room_can_remove_songs
+    @room.upload("Macarena")
+    @room.upload("Chirpy Chirpy Cheep Cheep")
+    @room.remove("Macarena")
+    assert_equal(["Chirpy Chirpy Cheep Cheep"], @room.song_list)
+  end
+
 
 end
