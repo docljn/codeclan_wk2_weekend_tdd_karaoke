@@ -16,6 +16,8 @@ class Bar
   end
 
   def check_out(guest, room)
+    # considered just taking guest as argument, but
+    # guest may want to move from one room to another 
     @room.guest_list.delete(guest)
   end
 

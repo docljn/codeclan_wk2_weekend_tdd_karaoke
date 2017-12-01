@@ -25,7 +25,6 @@ class TestBar < MiniTest::Test
   end
 
   def test_bar_can_check_guest_into_room
-    # just using a string in place of a guest object - keep it simple for now!
     @bar.check_in("guest", @room)
     assert_equal(["guest"], @room.guest_list)
   end
