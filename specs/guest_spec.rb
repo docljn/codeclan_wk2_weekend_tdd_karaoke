@@ -18,5 +18,22 @@ class TestGuest < MiniTest::Test
     assert_equal("Petula", @guest.name)
   end
 
+  def test_guest_has_favourite_song
+    skip
+  end
+
+  def test_guest_sings
+    skip
+  end
+
+  def test_guest_can_request_song
+    skip
+  end
+
+  def test_guest_can_remove_song
+    skip
+  end
+
+
 
 end

@@ -34,7 +34,17 @@ class TestBar < MiniTest::Test
     @bar.check_in("another guest", @room)
     @bar.check_out("guest", @room)
     assert_equal(["another guest"], @room.guest_list)
+  end
 
+  def test_bar_can_add_songlist
+    @bar.add_song_list(@room, ["Hello", "Firework", "Sober"])
+    assert_equal(["Hello", "Firework", "Sober"], @room.song_list)
+  end
+
+  def test_bar_can_clear_songlist
+    @bar.add_song_list(@room, ["Hello", "Firework"])
+    @bar.clear_song_list(@room)
+    assert_equal([], @room.song_list)
   end
 
 

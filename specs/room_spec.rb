@@ -51,5 +51,12 @@ class TestRoom < MiniTest::Test
     assert_equal(["Chirpy Chirpy Cheep Cheep"], @room.song_list)
   end
 
+  def test_room_can_clear_song_list
+    @room.upload("Macarena")
+    @room.upload("Chirpy Chirpy Cheep Cheep")
+    @room.clear_song_list
+    assert_equal([], @room.song_list)
+  end
+
 
 end

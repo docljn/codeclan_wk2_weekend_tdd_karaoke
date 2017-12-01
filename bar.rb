@@ -21,6 +21,17 @@ class Bar
     @room.leave(guest)
   end
 
+  def add_song_list(room, songlist)
+    songlist.each do |song|
+      unless room.song_list.include?(song)
+        room.upload(song)
+      end
+    end
+  end
+
+  def clear_song_list(room)
+  end
+
 end
 
 # bar.rb
