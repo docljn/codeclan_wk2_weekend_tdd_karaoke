@@ -24,6 +24,10 @@ class Room
     @guest_list.delete(guest)
   end
 
+  def is_empty?
+    @guest_list.length == 0
+  end
+
   def upload(song)
     @song_list << song
   end

@@ -5,14 +5,16 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require_relative( '../bar.rb' )
 require_relative( '../room.rb' )
+require_relative( '../guest.rb' )
 
 
 
 class TestBar < MiniTest::Test
 
   def setup
-    @room = Room.new("Blues")
+    @room = Room.new("Blues", 2)
     @bar = Bar.new("CCK", @room)
+    @guest = Guest.new("James", 50)
 
   end
 
@@ -41,10 +43,26 @@ class TestBar < MiniTest::Test
     assert_equal(["Hello", "Firework", "Sober"], @room.song_list)
   end
 
-  def test_bar_can_clear_songlist
+  def test_bar_can_reset_room__room_empty
     @bar.add_song_list(@room, ["Hello", "Firework"])
-    @bar.clear_song_list(@room)
+    @bar.check_in(@guest, @room)
+    @bar.check_out(@guest, @room)
+    @bar.reset(@room)
     assert_equal([], @room.song_list)
+    assert_equal([], @room.guest_list)
+  end
+
+  def test_bar_can_reset_room__room_occupied
+    @bar.add_song_list(@room, ["Hello", "Firework"])
+    @bar.check_in(@guest, @room)
+    @bar.reset(@room)
+    assert_equal(["Hello", "Firework"], @room.song_list)
+    assert_equal([@guest], @room.guest_list)
+  end
+
+  def test_bar_can_charge_customer
+    @bar.charge(@guest, 10)
+    assert_equal(40, @guest.money)
   end
 
 

@@ -69,6 +69,18 @@ class TestRoom < MiniTest::Test
     assert_equal([], @room.song_list)
   end
 
+  def test_room_can_check_if_it_is_empty__false
+    @room.enter("guest")
+    @room.enter("another_guest")
+    assert_equal(false, @room.is_empty?)
+  end
+
+  def test_room_can_check_if_it_is_empty__true
+    @room.enter("guest")
+    @room.leave("guest")
+    assert_equal(true, @room.is_empty?)
+  end
+
 
 
 

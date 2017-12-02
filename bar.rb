@@ -29,6 +29,12 @@ class Bar
     end
   end
 
+  def reset(room)
+    if room.is_empty?
+      room.clear_song_list
+    end
+  end
+
 end
 
 # bar.rb
