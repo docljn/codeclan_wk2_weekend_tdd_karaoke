@@ -28,6 +28,10 @@ class Room
     @song_list.delete(song)
   end
 
+  def clear_song_list
+    @song_list.clear
+  end
+
 end
 
 # room.rb

@@ -29,8 +29,7 @@ class Bar
     end
   end
 
-  def clear_song_list(room)
-  end
+
 
 end
 
