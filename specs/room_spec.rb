@@ -11,11 +11,15 @@ require_relative( '../room.rb' )
 class TestRoom < MiniTest::Test
 
   def setup
-    @room = Room.new("Soul")
+    @room = Room.new("Soul", 2)
   end
 
   def test_room_has_name
     assert_equal("Soul", @room.name)
+  end
+
+  def test_room_has_capacity
+    assert_equal(2, @room.capacity)
   end
 
   def test_room_has_place_to_store_songlist
@@ -26,10 +30,17 @@ class TestRoom < MiniTest::Test
     assert_equal([], @room.guest_list)
   end
 
-  def test_guest_can_enter_room
+  def test_guest_can_enter_room__room_has_space
     # not using an actual guest at this point (no need to complicate things!)
     @room.enter("guest")
     assert_equal(["guest"], @room.guest_list )
+  end
+
+  def test_guest_cannot_enter_room__room_full
+    @room.enter("guest")
+    @room.enter("another guest")
+    @room.enter("a third guest")
+    assert_equal(["guest", "another guest"], @room.guest_list )
   end
 
   def test_guest_can_leave_room
@@ -57,6 +68,8 @@ class TestRoom < MiniTest::Test
     @room.clear_song_list
     assert_equal([], @room.song_list)
   end
+
+
 
 
 end

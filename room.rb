@@ -4,16 +4,19 @@ require("pry")
 
 class Room
 
-  attr_reader :name, :song_list, :guest_list
+  attr_reader :name, :song_list, :guest_list, :capacity
 
-  def initialize(name)
+  def initialize(name, capacity)
     @name = name
+    @capacity = capacity
     @song_list = song_list || []
     @guest_list = guest_list || []
   end
 
   def enter(guest)
-    @guest_list << guest
+    if @guest_list.length < @capacity
+      @guest_list << guest
+    end
   end
 
   def leave(guest)
