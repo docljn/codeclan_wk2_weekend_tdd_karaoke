@@ -35,9 +35,17 @@ class Room
   def remove(song)
     @song_list.delete(song)
   end
-
+  
   def clear_song_list
     @song_list.clear
+  end
+
+  def play(song)
+    if @song_list.include?(song)
+      return "Now playing #{song.name}"
+    else
+      return "Please choose another song"
+    end
   end
 
 end

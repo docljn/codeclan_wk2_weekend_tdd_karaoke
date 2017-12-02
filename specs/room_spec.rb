@@ -5,6 +5,7 @@ require "minitest/reporters"
 Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require_relative( '../room.rb' )
+require_relative( '../song.rb' )
 
 
 
@@ -12,6 +13,8 @@ class TestRoom < MiniTest::Test
 
   def setup
     @room = Room.new("Soul", 2)
+    @song = Song.new("Macarena")
+    @another_song = Song.new("Hello")
   end
 
   def test_room_has_name
@@ -79,6 +82,18 @@ class TestRoom < MiniTest::Test
     @room.enter("guest")
     @room.leave("guest")
     assert_equal(true, @room.is_empty?)
+  end
+
+  def test_room_can_play_song__on_list
+    # need actual song object at this point
+    @room.upload(@song)
+    assert_equal("Now playing Macarena", @room.play(@song))
+  end
+
+  def test_room_can_play_song__not_on_list
+    # need actual song object at this point
+    @room.upload(@song)
+    assert_equal("Please choose another song", @room.play(@another_song))
   end
 
 
