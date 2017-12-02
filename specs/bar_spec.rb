@@ -60,9 +60,14 @@ class TestBar < MiniTest::Test
     assert_equal([@guest], @room.guest_list)
   end
 
-  def test_bar_can_charge_customer
+  def test_bar_can_charge_customer__sufficient_funds
     @bar.charge(@guest, 10)
     assert_equal(40, @guest.money)
+  end
+
+  def test_bar_can_charge_customer__insufficient_funds
+    @bar.charge(@guest, 100)
+    assert_equal(50, @guest.money)
   end
 
 

@@ -32,6 +32,10 @@ class TestGuest < MiniTest::Test
     assert_equal(40, @guest.money)
   end
 
+  def test_guest_can_afford_charge
+    assert_equal(false, @guest.can_afford?(100))
+  end
+
   def test_guest_has_favourite_song
     skip
   end

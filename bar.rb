@@ -35,6 +35,16 @@ class Bar
     end
   end
 
+  def charge(guest, amount)
+    if guest.can_afford?(amount)
+      guest.spend(amount)
+    else
+      return "Refused service"
+      # not sure if this is useful or not?
+    end
+  end
+
+
 end
 
 # bar.rb

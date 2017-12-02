@@ -11,8 +11,12 @@ class Guest
     @money = money
   end
 
+  def can_afford?(amount)
+    @money >= amount
+  end
+
   def spend(amount)
-    @money -= amount if @money >= amount  
+    @money -= amount if can_afford?(amount)
   end
 
 end
