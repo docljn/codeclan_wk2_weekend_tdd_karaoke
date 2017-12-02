@@ -17,6 +17,7 @@ class Room
     if @guest_list.length < @capacity
       @guest_list << guest
     end
+    # consider what to do with the guest at this point?
   end
 
   def leave(guest)

@@ -29,8 +29,6 @@ class Bar
     end
   end
 
-
-
 end
 
 # bar.rb
