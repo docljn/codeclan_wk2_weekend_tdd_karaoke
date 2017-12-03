@@ -6,15 +6,24 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 require_relative( '../bar.rb' )
 require_relative( '../room.rb' )
 require_relative( '../guest.rb' )
+require_relative( '../song.rb' )
 
-
+require("pry")
 
 class TestBar < MiniTest::Test
 
   def setup
-    @room = Room.new("Blues", 2)
+    @firework = Song.new("Firework")
+    @sober = Song.new("Sober")
+    @guest = Guest.new({:name => "James", :money => 50, :favourite => "Firework"})
+    @another_guest = Guest.new({:name => "Jim", :money => 50, :favourite => "Sober"})
+    @room_with_guests = Room.new({:name => "Rock", :capacity => 2, :song_list =>[@sober, @firework], :guest_list => [@guest, @another_guest]})
+    @room = Room.new({
+    :name => "Blues",
+    :capacity => 2})
     @bar = Bar.new("CCK", @room)
-    @guest = Guest.new("James", 50, "Wonderwall")
+
+
 
   end
 
@@ -27,24 +36,25 @@ class TestBar < MiniTest::Test
   end
 
   def test_bar_can_check_guest_into_room
-    @bar.check_in("guest", @room)
-    assert_equal(["guest"], @room.guest_list)
+    @bar.check_in(@guest, @room)
+    assert_equal([@guest], @room.guest_list)
   end
 
   def test_bar_can_check_guest_out_of_room
-    @bar.check_in("guest", @room)
-    @bar.check_in("another guest", @room)
-    @bar.check_out("guest", @room)
-    assert_equal(["another guest"], @room.guest_list)
+
+    @bar.check_in(@guest, @room)
+    @bar.check_in(@another_guest, @room)
+    @bar.check_out(@guest, @room)
+    assert_equal([@another_guest], @room.guest_list)
   end
 
   def test_bar_can_add_songlist
-    @bar.add_song_list(@room, ["Hello", "Firework", "Sober"])
-    assert_equal(["Hello", "Firework", "Sober"], @room.song_list)
+    @bar.add_song_list(@room, [@firework, @sober])
+    assert_equal([@firework, @sober], @room.song_list)
   end
 
   def test_bar_can_reset_room__room_empty
-    @bar.add_song_list(@room, ["Hello", "Firework"])
+    @bar.add_song_list(@room, [@firework, @sober])
     @bar.check_in(@guest, @room)
     @bar.check_out(@guest, @room)
     @bar.reset(@room)
@@ -53,11 +63,9 @@ class TestBar < MiniTest::Test
   end
 
   def test_bar_can_reset_room__room_occupied
-    @bar.add_song_list(@room, ["Hello", "Firework"])
-    @bar.check_in(@guest, @room)
-    @bar.reset(@room)
-    assert_equal(["Hello", "Firework"], @room.song_list)
-    assert_equal([@guest], @room.guest_list)
+    @bar.reset(@room_with_guests)
+    assert_equal([@sober, @firework], @room_with_guests.song_list)
+    assert_equal([@guest, @another_guest], @room_with_guests.guest_list)
   end
 
   def test_bar_can_charge_customer__sufficient_funds
@@ -70,10 +78,14 @@ class TestBar < MiniTest::Test
     assert_equal(50, @guest.money)
   end
 
-  def test_customer_reacts_well_if_favourite_on_song_list
-    skip
-    assert_equal()
+  def test_guest_cheers_on_checkin_if_favourite_on_list
+    @room.upload(@firework)
+    result = @bar.check_in(@guest, @room)
+    assert_equal("Whoooo!", result)
   end
+
+  
+
 
 
 

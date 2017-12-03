@@ -6,6 +6,7 @@ Minitest::Reporters.use! Minitest::Reporters::SpecReporter.new
 
 require_relative( '../room.rb' )
 require_relative( '../song.rb' )
+require_relative( '../guest.rb'  )
 
 
 
@@ -18,6 +19,8 @@ class TestRoom < MiniTest::Test
     )
     @song = Song.new("Macarena")
     @another_song = Song.new("Hello")
+    @guest = Guest.new({:name => "Jack", :money => 100, :favourite => "Macarena"})
+    @another_guest = Guest.new({:name => "Jim", :money => 10, :favourite => "Mud"})
   end
 
   def test_room_has_name
@@ -37,9 +40,8 @@ class TestRoom < MiniTest::Test
   end
 
   def test_guest_can_enter_room__room_has_space
-    # not using an actual guest at this point (no need to complicate things!)
-    @room.enter("guest")
-    assert_equal(["guest"], @room.guest_list )
+    @room.enter(@guest)
+    assert_equal([@guest], @room.guest_list )
   end
 
   def test_guest_cannot_enter_room__room_full
@@ -57,20 +59,20 @@ class TestRoom < MiniTest::Test
   end
 
   def test_room_can_upload_songs
-    @room.upload("Macarena")
-    assert_equal(["Macarena"], @room.song_list)
+    @room.upload(@song)
+    assert_equal([@song], @room.song_list)
   end
 
   def test_room_can_remove_songs
-    @room.upload("Macarena")
-    @room.upload("Chirpy Chirpy Cheep Cheep")
-    @room.remove("Macarena")
-    assert_equal(["Chirpy Chirpy Cheep Cheep"], @room.song_list)
+    @room.upload(@song)
+    @room.upload(@another_song)
+    @room.remove(@song)
+    assert_equal([@another_song], @room.song_list)
   end
 
   def test_room_can_clear_song_list
-    @room.upload("Macarena")
-    @room.upload("Chirpy Chirpy Cheep Cheep")
+    @room.upload(@song)
+    @room.upload(@another_song)
     @room.clear_song_list
     assert_equal([], @room.song_list)
   end
@@ -87,29 +89,31 @@ class TestRoom < MiniTest::Test
     assert_equal(true, @room.is_empty?)
   end
 
-  def test_room_can_load_song_by_name__on_list
+  def test_room_can_find_song_by_name__on_list
     @room.upload(@song)
-    assert_equal(@song, @room.load("Macarena"))
+    assert_equal(@song, @room.find("Macarena"))
   end
 
-  def test_room_can_load_song_by_name__not_on_list
+  def test_room_can_find_song_by_name__not_on_list
     @room.upload(@song)
-    assert_equal("Hello is not available in this room", @room.load("Hello"))
+    assert_nil(@room.find("Hello"))
   end
 
   def test_room_can_play_song__on_list
-    # need actual song object at this point
     @room.upload(@song)
-    @room.load("Macarena")
+    @room.find("Macarena")
     assert_equal("Now playing Macarena", @room.play(@song))
   end
 
   def test_room_can_play_song__not_on_list
-    # need actual song object at this point
     @room.upload(@song)
-    @room.load("Hello")
+    @room.find("Hello")
     assert_equal("Please choose another song", @room.play(@another_song))
   end
+
+
+
+
 
 
 

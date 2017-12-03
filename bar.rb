@@ -14,8 +14,10 @@ class Bar
   end
 
   def check_in(guest, room)
-    @room.enter(guest)
-    # add something so guest reacts to song_list?
+    room.enter(guest)
+    if room.find(guest.favourite)
+      guest.cheer
+    end
   end
 
   def check_out(guest, room)

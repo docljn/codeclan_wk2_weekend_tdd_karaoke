@@ -41,14 +41,15 @@ class Room
     @song_list.clear
   end
 
-  def load(song_name)
+  def find(song_name)
     @song_list.each do |song|
       return song if song.name == song_name
     end
-    return "#{song_name} is not available in this room"
+    return nil
   end
 
   def play(song)
+    # how can I reduce the risk that changing 'song' will break 'room'?
     if @song_list.include?(song)
       return "Now playing #{song.name}"
     else

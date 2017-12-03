@@ -9,7 +9,7 @@ class Guest
   def initialize(args)
     @name = args[:name]
     @money = args[:money]
-    @favourite = args[:favourite]
+    @favourite = args.fetch(:favourite, "Whatever")
   end
 
   def can_afford?(amount)
@@ -20,7 +20,7 @@ class Guest
     @money -= amount if can_afford?(amount)
   end
 
-  def hooray
+  def cheer
     return "Whoooo!"
   end
 

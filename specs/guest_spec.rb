@@ -44,7 +44,9 @@ class TestGuest < MiniTest::Test
     assert_equal("Downtown", @guest.favourite)
   end
 
-  def test_guest_reacts_well
-    assert_equal("Whoooo!", @guest.hooray)
+  def test_guest_cheers
+    assert_equal("Whoooo!", @guest.cheer)
   end
+
+
 end
