@@ -6,11 +6,12 @@ class Room
 
   attr_reader :name, :song_list, :guest_list, :capacity
 
-  def initialize(name, capacity)
-    @name = name
-    @capacity = capacity
-    @song_list = song_list || []
-    @guest_list = guest_list || []
+  def initialize(args)
+    @name = args[:name]
+    @capacity = args[:capacity]
+    # .fetch returns the value of the specified key, or the optional default if the key cannot be found.
+    @song_list = args.fetch(:song_list, [])
+    @guest_list = args.fetch(:guest_list, [])
   end
 
   def enter(guest)

@@ -11,11 +11,6 @@ require_relative( '../guest.rb' )
 
 class TestGuest < MiniTest::Test
 
-  # 11 Gear.new(
-  # 12  :chainring  => 52,
-  # 13  :cog       => 11,
-  # 14  :wheel     => Wheel.new(26, 1.5)).gear_inches
-
   def setup
     @guest = Guest.new(
       :name => "Petula",
