@@ -4,17 +4,19 @@ require("pry")
 
 class Bar
 
-  attr_reader :name, :room
+  attr_reader :name, :room, :entry_fee
 
-  def initialize(name, room)
+  def initialize(name, room, entry_fee)
     # rethinking if bar has more than one room?
     # maybe a hash instead of a single variable
     @name = name
     @room = room
+    @entry_fee = entry_fee
   end
 
   def check_in(guest, room)
     room.enter(guest)
+    charge(guest, @entry_fee)
     if room.find(guest.favourite)
       guest.cheer
     end

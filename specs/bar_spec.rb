@@ -21,7 +21,8 @@ class TestBar < MiniTest::Test
     @room = Room.new({
     :name => "Blues",
     :capacity => 2})
-    @bar = Bar.new("CCK", @room)
+    @bar = Bar.new("CCK", @room, 0)
+    @charge_bar = Bar.new("Loaded", @room, 5)
 
 
 
@@ -84,7 +85,14 @@ class TestBar < MiniTest::Test
     assert_equal("Whoooo!", result)
   end
 
-  
+  def test_bar_has_entry_fee
+    assert_equal(5, @charge_bar.entry_fee)
+  end
+
+  def test_guest_pays_on_check_in
+    @charge_bar.check_in(@guest, @room)
+    assert_equal(45, @guest.money)
+  end
 
 
 
