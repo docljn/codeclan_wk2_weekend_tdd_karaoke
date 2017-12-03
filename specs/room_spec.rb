@@ -84,15 +84,27 @@ class TestRoom < MiniTest::Test
     assert_equal(true, @room.is_empty?)
   end
 
+  def test_room_can_load_song_by_name__on_list
+    @room.upload(@song)
+    assert_equal(@song, @room.load("Macarena"))
+  end
+
+  def test_room_can_load_song_by_name__not_on_list
+    @room.upload(@song)
+    assert_equal("Hello is not available in this room", @room.load("Hello"))
+  end
+
   def test_room_can_play_song__on_list
     # need actual song object at this point
     @room.upload(@song)
+    @room.load("Macarena")
     assert_equal("Now playing Macarena", @room.play(@song))
   end
 
   def test_room_can_play_song__not_on_list
     # need actual song object at this point
     @room.upload(@song)
+    @room.load("Hello")
     assert_equal("Please choose another song", @room.play(@another_song))
   end
 

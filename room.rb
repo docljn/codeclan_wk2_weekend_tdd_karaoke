@@ -17,7 +17,7 @@ class Room
     if @guest_list.length < @capacity
       @guest_list << guest
     end
-    # consider what to do with the guest at this point?
+    # consider what to do with the guest at this point if the room is full?
   end
 
   def leave(guest)
@@ -35,9 +35,16 @@ class Room
   def remove(song)
     @song_list.delete(song)
   end
-  
+
   def clear_song_list
     @song_list.clear
+  end
+
+  def load(song_name)
+    @song_list.each do |song|
+      return song if song.name == song_name
+    end
+    return "#{song_name} is not available in this room"
   end
 
   def play(song)

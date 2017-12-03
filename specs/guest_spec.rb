@@ -8,10 +8,19 @@ require_relative( '../guest.rb' )
 
 
 
+
 class TestGuest < MiniTest::Test
 
+  # 11 Gear.new(
+  # 12  :chainring  => 52,
+  # 13  :cog       => 11,
+  # 14  :wheel     => Wheel.new(26, 1.5)).gear_inches
+
   def setup
-    @guest = Guest.new("Petula", 40)
+    @guest = Guest.new(
+      :name => "Petula",
+      :money => 40,
+      :favourite => "Downtown")
   end
 
   def test_guest_has_name
@@ -37,22 +46,10 @@ class TestGuest < MiniTest::Test
   end
 
   def test_guest_has_favourite_song
-    skip
+    assert_equal("Downtown", @guest.favourite)
   end
 
-  def test_guest_sings_favourite_song
-    skip
+  def test_guest_reacts_well
+    assert_equal("Whoooo!", @guest.hooray)
   end
-
-  def test_guest_can_request_song
-    skip
-  end
-
-  def test_guest_can_remove_song
-    skip
-  end
-
-
-
-
 end

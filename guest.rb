@@ -4,11 +4,12 @@ require("pry")
 
 class Guest
 
-  attr_reader :name, :money
+  attr_reader :name, :money, :favourite
 
-  def initialize(name, money)
-    @name = name
-    @money = money
+  def initialize(args)
+    @name = args[:name]
+    @money = args[:money]
+    @favourite = args[:favourite]
   end
 
   def can_afford?(amount)
@@ -17,6 +18,10 @@ class Guest
 
   def spend(amount)
     @money -= amount if can_afford?(amount)
+  end
+
+  def hooray
+    return "Whoooo!"
   end
 
 end

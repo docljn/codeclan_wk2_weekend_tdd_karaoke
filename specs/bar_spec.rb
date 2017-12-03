@@ -14,7 +14,7 @@ class TestBar < MiniTest::Test
   def setup
     @room = Room.new("Blues", 2)
     @bar = Bar.new("CCK", @room)
-    @guest = Guest.new("James", 50)
+    @guest = Guest.new("James", 50, "Wonderwall")
 
   end
 
@@ -68,6 +68,11 @@ class TestBar < MiniTest::Test
   def test_bar_can_charge_customer__insufficient_funds
     @bar.charge(@guest, 100)
     assert_equal(50, @guest.money)
+  end
+
+  def test_customer_reacts_well_if_favourite_on_song_list
+    skip
+    assert_equal()
   end
 
 
